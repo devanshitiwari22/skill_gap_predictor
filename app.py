@@ -21,7 +21,6 @@ def get_clean_name(username):
     clean = re.sub(r'\d+', '', name_part).replace('.', ' ').replace('_', ' ').replace('-', ' ').strip().title()
     return clean if clean else "Candidate"
 
-# Dynamic Forecasting Engine for 2023-2030
 def generate_dynamic_forecast_data(skills, scenario_multiplier=1.0):
     baseline_profiles = {
         "AI Agents": {"base": 14, "growth": 14.5, "cap": 99},
@@ -67,8 +66,6 @@ st.set_page_config(
     layout="wide", 
     initial_sidebar_state="expanded"
 )
-
-# ----------------- 3D ELEVATED EXECUTIVE PURPLE UI STYLING -----------------
 st.markdown("""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@500;600;700&display=swap');
@@ -568,8 +565,6 @@ if portal_mode in ["Student / Candidate View", "👤 Student / Candidate View"]:
     roles_df = get_roles()
     role_dict = dict(zip(roles_df['role_name'], roles_df['required_skills']))
     ctc_dict = dict(zip(roles_df['role_name'], roles_df['avg_ctc_lpa']))
-    
-    # 1. 3D ELEVATED TOP BANNER
     st.markdown(f"""
     <div class="gamertag-banner">
         <div>
@@ -594,8 +589,6 @@ if portal_mode in ["Student / Candidate View", "👤 Student / Candidate View"]:
         </div>
     </div>
     """, unsafe_allow_html=True)
-    
-    # 2. FOUR TABS IN 3D ELEVATED CARD DOCK
     tab_eval, tab_3d, tab_forecast, tab_history = st.tabs([
         "Skill Assessment Lab", 
         "3D Vector Competency Space", 
@@ -744,8 +737,6 @@ if portal_mode in ["Student / Candidate View", "👤 Student / Candidate View"]:
                     
             st.write("")
             run_analysis = st.button("Execute Placement Diagnostic & Gap Analysis", type="primary", use_container_width=True)
-        
-        # ----------------- DIAGNOSTIC RESULTS -----------------
         if run_analysis:
             if not candidate_name.strip():
                 st.error("Please specify candidate name.")
@@ -876,7 +867,6 @@ if portal_mode in ["Student / Candidate View", "👤 Student / Candidate View"]:
                     mime="text/plain"
                 )
 
-    # ----------------- TAB 2: 3D VECTOR COMPETENCY SPACE (PURPLE DOTS) -----------------
     with tab_3d:
         with st.container(border=True):
             st.markdown("<h3 style='margin-top:0; color:#1e1b4b;'>3D Vector Competency Space (Multi-Axis Geometry)</h3>", unsafe_allow_html=True)
@@ -943,9 +933,6 @@ if portal_mode in ["Student / Candidate View", "👤 Student / Candidate View"]:
             st.plotly_chart(fig_3d, use_container_width=True)
             st.caption("• Deep Royal Purple (#5b21b6) = Acquired Competencies | • Electric Purple (#9333ea) = Target Gap Vectors")
 
-    # =========================================================================
-    # TAB 3: DYNAMIC 2026–2030 DEMAND FORECASTING (REAL PREDICTIVE ENGINE)
-    # =========================================================================
     with tab_forecast:
         with st.container(border=True):
             st.markdown("<h3 style='margin-top:0; color:#1e1b4b;'>2026–2030 Skill Demand Forecasting & Horizon Modeling</h3>", unsafe_allow_html=True)
@@ -985,7 +972,6 @@ if portal_mode in ["Student / Candidate View", "👤 Student / Candidate View"]:
                 if forecast_skills:
                     forecast_df = generate_dynamic_forecast_data(forecast_skills, scenario_multiplier=multiplier)
                     
-                    # 1. LIVE HORIZON PREDICTION KPI METRICS ROW FOR THE SELECTED YEAR
                     horizon_df = forecast_df[forecast_df["Year"] == forecast_horizon].sort_values(by="Demand Index", ascending=False)
                     base_df = forecast_df[forecast_df["Year"] == 2026].set_index("Skill")["Demand Index"]
                     
@@ -994,7 +980,7 @@ if portal_mode in ["Student / Candidate View", "👤 Student / Candidate View"]:
                         top_val = horizon_df.iloc[0]["Demand Index"]
                         avg_demand = round(horizon_df["Demand Index"].mean(), 1)
                         
-                        # Calculate growth of top skill vs 2026
+                        
                         base_val = base_df.get(top_skill, 50.0)
                         growth_pct = round(((top_val - base_val) / max(1, base_val)) * 100, 1)
                         sign = "+" if growth_pct >= 0 else ""
@@ -1004,7 +990,7 @@ if portal_mode in ["Student / Candidate View", "👤 Student / Candidate View"]:
                         k2.metric(f"Cohort Avg Demand ({forecast_horizon})", f"{avg_demand}%", f"Target Window")
                         k3.metric(f"Net Growth ({top_skill} vs 2026)", f"{sign}{growth_pct}%", f"{market_scenario.split('(')[0].strip()}")
                     
-                    # 2. BEAUTIFUL PLOTLY FORECAST CHART WITH SHADED PREDICTION ZONE
+                    
                     fig_trend = px.line(
                         forecast_df, 
                         x="Year", 
@@ -1015,7 +1001,7 @@ if portal_mode in ["Student / Candidate View", "👤 Student / Candidate View"]:
                         title=f"Predicted Trajectory (2023–2030) • Scenario: {market_scenario.split('(')[0].strip()}"
                     )
                     
-                    # Shaded Forecast Region from 2026 to 2030
+                    
                     fig_trend.add_vrect(
                         x0=2026, x1=2030,
                         fillcolor="rgba(124, 58, 237, 0.06)", opacity=0.8,
@@ -1025,7 +1011,7 @@ if portal_mode in ["Student / Candidate View", "👤 Student / Candidate View"]:
                         annotation_font_color="#6d28d9"
                     )
                     
-                    # Vertical Line for Selected Graduation Year
+                    
                     fig_trend.add_vline(
                         x=forecast_horizon, 
                         line_dash="dash", 
@@ -1046,7 +1032,7 @@ if portal_mode in ["Student / Candidate View", "👤 Student / Candidate View"]:
                     )
                     st.plotly_chart(fig_trend, use_container_width=True)
                     
-            # 3. COMPETITIVE LEADERBOARD TABLE FOR THE SELECTED HORIZON YEAR
+            
             if forecast_skills and not horizon_df.empty:
                 st.markdown(f"#### Competency Demand Ranking for Graduation Year: `{forecast_horizon}`")
                 
@@ -1077,7 +1063,7 @@ if portal_mode in ["Student / Candidate View", "👤 Student / Candidate View"]:
                 rank_df = pd.DataFrame(table_rows)
                 st.dataframe(rank_df, use_container_width=True, hide_index=True)
 
-    # ----------------- TAB 4: CANDIDATE HISTORY -----------------
+    
     with tab_history:
         with st.container(border=True):
             st.markdown("<h3 style='margin-top:0; color:#1e1b4b;'>Candidate Assessment History & Audit Log</h3>", unsafe_allow_html=True)
@@ -1087,9 +1073,6 @@ if portal_mode in ["Student / Candidate View", "👤 Student / Candidate View"]:
             else:
                 st.info("No prior assessment records logged for this session yet.")
 
-# ==============================================================================
-# VIEW 2: TPO ADMIN VIEW
-# ==============================================================================
 else:
     tpo_df = get_tpo_analytics()
     
