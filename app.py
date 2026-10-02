@@ -475,6 +475,7 @@ if not st.session_state.logged_in:
         <h1 style="text-align: center; font-size: 2.5rem; font-weight: 800; color: #1e1b4b; margin-bottom: 6px;">
             Future Skill Gap Predictor
         </h1>
+    """, unsafe_allow_html=True)
     st.write("")
     col_l1, col_l2, col_l3 = st.columns([1, 1.8, 1])
     with col_l2:
@@ -576,12 +577,11 @@ if portal_mode in ["Student / Candidate View", "👤 Student / Candidate View"]:
             </div>
             <div class="tag-subtext">
                 Current Tier: <span class="tag-highlight">Level 3: Tech Apprentice</span> &nbsp;|&nbsp; 
-                Target Trajectory: <span class="tag-highlight">Product Tier (10–18 LPA)</span>
-            </div>
-        </div>
-        <div class="tag-streak-box">
-            <div class="tag-streak-label">
-                SESSION STREAK
+                Target Trajectory: <span class="tag-highlight">Product Tier (10-18 LPA)</span>
+    </div>
+            <div class="tag-streak-box">
+                <div class="tag-streak-label">
+                    SESSION STREAK
             </div>
             <div class="tag-gold">
                 04 Days Active
