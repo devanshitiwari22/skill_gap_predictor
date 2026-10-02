@@ -592,7 +592,7 @@ if portal_mode in ["Student / Candidate View", "👤 Student / Candidate View"]:
     tab_eval, tab_3d, tab_forecast, tab_history = st.tabs([
         "Skill Assessment Lab", 
         "3D Vector Competency Space", 
-        "2026–2030 Demand Forecasting", 
+        "2026-2030 Demand Forecasting", 
         "Assessment Records & Export"
     ])
     with tab_eval:
